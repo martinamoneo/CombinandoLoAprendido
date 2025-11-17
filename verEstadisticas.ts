@@ -4,7 +4,7 @@ export interface ItemEstadistica {
   cantidad: number;
   porcentaje: number;
 }
-
+// estadisticas tiene estos campos con esos tipos
 export interface EstadisticasTareas {
   totalTareas: number;
   porEstado: Record<EstadoTarea, ItemEstadistica>;
@@ -28,7 +28,7 @@ export const calcularEstadisticas = (tasks: Tarea[]): EstadisticasTareas => {
     }
   };
 
-  // se recorren las tareas y se cuentan NUMEROS
+  // calcular cantidad de tareas por estado y dificultad
   const conteoFinal = tasks.reduce((acumulador, tareaActual) => {
     
     // se suma 1 a la cuenta de los estados
@@ -44,13 +44,13 @@ export const calcularEstadisticas = (tasks: Tarea[]): EstadisticasTareas => {
 
   // calcular porcentajes
   const calcularPorcentajes = (
-    conteos: Record<string, number>
-  ): Record<string, ItemEstadistica> => {
+    conteos: Record<string, number> // ej -> facil : 2
+  ): Record<string, ItemEstadistica> => { // ej -> facil : { cantidad: 2, porcentaje: 40 }
     
     return Object.fromEntries( // Convierte un array de [clave, valor] en un objeto
       Object.entries(conteos) // Convierte el objeto { 'facil': 1 } en un array [ ['facil', 1] ]
-        .map(([key, count]) => [ // .map() es funcional (sin bucles)
-          key, // 'pendiente', 'facil', etc.
+        .map(([key, count]) => [ // convierte cada [ 'facil', 1 ] en [ 'facil', { cantidad: 1, porcentaje: 20 } ]
+          key,
           {
             cantidad: count,
             porcentaje: totalTareas > 0 ? (count / totalTareas) * 100 : 0
@@ -59,7 +59,7 @@ export const calcularEstadisticas = (tasks: Tarea[]): EstadisticasTareas => {
     );
   };
 
-  // 5. Devolvemos el objeto final
+  // se devuelven las estadisticas con numero y porcentaje
   return {
     totalTareas: totalTareas,
     porEstado: calcularPorcentajes(conteoFinal.estados) as Record<EstadoTarea, ItemEstadistica>,

@@ -1,6 +1,6 @@
 export type EstadoTarea = 'pendiente' | 'vencida' | 'terminada' | 'cancelada' | 'en curso';
 
-export type DificultadTarea = 'facil' | 'media' | 'dificil'; 
+export type DificultadTarea = 'fácil' | 'media' | 'difícil'; 
 
 export interface Tarea {
   readonly id: string; // readonly porque el UUID no debe cambiar nunca

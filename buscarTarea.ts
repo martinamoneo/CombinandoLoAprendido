@@ -1,15 +1,6 @@
 import { Tarea } from './tarea';
 
-/**
- * 🧩 Función Pura: Busca tareas por coincidencia en el título o descripción.
- * * Paradigma: Lógico / Funcional Puro.
- * - Es pura porque solo lee la lista de entrada y devuelve un nuevo array.
- * - Es lógica porque aplica una condición de filtrado (AND/OR).
- * * @param tareas Lista completa de tareas a buscar.
- * @param terminoBusqueda El texto a buscar.
- * @returns Un nuevo array de tareas que contienen el término de búsqueda.
- */
-export const buscarTareasRelacionadas = (tareas: Tarea[], terminoBusqueda: string): Tarea[] => {
+export const buscarTarea = (tareas: Tarea[], terminoBusqueda: string): Tarea[] => {
     // Convertimos el término de búsqueda a minúsculas y eliminamos espacios extra
     const terminoLower = terminoBusqueda.toLowerCase().trim();
 
@@ -23,7 +14,7 @@ export const buscarTareasRelacionadas = (tareas: Tarea[], terminoBusqueda: strin
         const tituloLower = tarea.nombre.toLowerCase();
         const descripcionLower = tarea.descripcion ? tarea.descripcion.toLowerCase() : '';
 
-        // Comprobamos si el título O la descripción incluyen el término.
+        // Comprobamos si el título o la descripción incluyen el término.
         const coincideEnTitulo = tituloLower.includes(terminoLower);
         const coincideEnDescripcion = descripcionLower.includes(terminoLower);
 
@@ -31,3 +22,5 @@ export const buscarTareasRelacionadas = (tareas: Tarea[], terminoBusqueda: strin
         return coincideEnTitulo || coincideEnDescripcion;
     });
 };
+
+// LÓGICO | lo voy a revisar cuando den la teoria del tema -martina

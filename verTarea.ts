@@ -1,31 +1,12 @@
-import { Tarea, EstadoTarea } from './tarea';
+import { Tarea } from './tarea';
 
-// --- 1. Ordenamiento (Lógico / Funcional Puro) ---
-
-/**
- * 🧩 Función Pura: Ordena las tareas por fecha de creación de forma ascendente.
- * (La tarea más vieja aparece primero - Requisito: Ordenar tareas por fecha de creación)
- * @param tareas Lista de tareas.
- * @returns Nueva lista de tareas ordenada.
- */
-export const ordenarPorCreacionAscendente = (tareas: Tarea[]): Tarea[] => {
-    // Usamos .slice() para crear una copia del array antes de ordenar, 
-    // garantizando la inmutabilidad (no se muta el array original).
+export const ordenPorCreacion = (tareas: Tarea[]): Tarea[] => {
     return tareas.slice().sort((a, b) => 
         a.fechaCreacion.getTime() - b.fechaCreacion.getTime()
     );
 };
 
-
-// --- 2. Filtros (Lógico / Funcional Puro) ---
-
-/**
- * 🧩 Función Pura: Filtra y devuelve solo las tareas que están vencidas.
- * Considera vencida si tiene fecha de vencimiento y esta es anterior a hoy.
- * @param tareas Lista de tareas.
- * @returns Nueva lista con solo tareas vencidas.
- */
-export const obtenerTareasVencidas = (tareas: Tarea[]): Tarea[] => {
+export const TareasVencidas = (tareas: Tarea[]): Tarea[] => {
     const hoy = new Date();
 
     return tareas.filter(tarea => {
@@ -41,14 +22,7 @@ export const obtenerTareasVencidas = (tareas: Tarea[]): Tarea[] => {
     });
 };
 
-
-/**
- * 🧩 Función Pura: Filtra tareas de alta prioridad (próximas a vencer).
- * Considera alta prioridad si vence en los próximos 7 días y no está terminada.
- * @param tareas Lista de tareas.
- * @returns Nueva lista con tareas de alta prioridad.
- */
-export const obtenerAltaPrioridad = (tareas: Tarea[]): Tarea[] => {
+export const AltaPrioridad = (tareas: Tarea[]): Tarea[] => {
     const ahora = Date.now();
     // 7 días en milisegundos
     const limitePrioridad = ahora + (7 * 24 * 60 * 60 * 1000); 
@@ -68,3 +42,7 @@ export const obtenerAltaPrioridad = (tareas: Tarea[]): Tarea[] => {
         );
     });
 };
+
+// el orden debe ser para todas las opciones
+// falta ver tareas por estado
+// LÓGICO | lo voy a revisar cuando den la teoria del tema -martina

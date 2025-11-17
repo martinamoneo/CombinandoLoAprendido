@@ -1,11 +1,12 @@
-import { Tarea, EstadoTarea, DificultadTarea } from './tarea.ts';
+import { Tarea } from './tarea.ts';
+import { traducirEstado, traducirDificultad } from './traduccionTarea.ts';
 
 // Interface auxiliar para definir los datos que recolectan Index y  GestorTareas
 export interface DatosCrearTarea {
   nombre: string;
   descripcion?: string;
-  estado?: EstadoTarea;
-  dificultad?: DificultadTarea;
+  estado: string;
+  dificultad: string;
   fechaVencimiento?: string;
   // El Gestor (POO) debe generar estos y pasarlos a la función pura.
   id: string; // El UUID
@@ -29,9 +30,9 @@ export const crearNuevaTarea = (data: DatosCrearTarea): Tarea => {
   const nuevaTarea: Tarea = {
     id: data.id, // Usa el UUID inyectado
     nombre: data.nombre,
-    descripcion: data.descripcion || 'sin descripcion', // Usa undefined si es opcional
-    estado: data.estado || 'pendiente',
-    dificultad: data.dificultad || 'facil',
+    descripcion: data.descripcion || 'sin descripcion',
+    estado: traducirEstado(data.estado),
+    dificultad: traducirDificultad(data.dificultad),
     fechaVencimiento: data.fechaVencimiento || 'sin fecha',
     fechaCreacion: data.fechaActual, // Usa la fecha inyectada
     fechaModificacion: data.fechaActual, // Al crear, es la misma
