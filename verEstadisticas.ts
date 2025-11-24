@@ -24,7 +24,7 @@ export const calcularEstadisticas = (tasks: Tarea[]): EstadisticasTareas => {
       'cancelada': 0, 'en curso': 0
     },
     dificultades: {
-      'facil': 0, 'media': 0, 'dificil': 0
+      'fácil': 0, 'media': 0, 'difícil': 0
     }
   };
 

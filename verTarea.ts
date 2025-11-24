@@ -1,48 +1,59 @@
-import { Tarea } from './tarea';
+import { Tarea, EstadoTarea } from './tarea';
 
+// comparar fecha
+const parseFechaLocal = (fechaStr: string): Date => {
+    return new Date(fechaStr + "T00:00:00");
+};
+
+// ordenar de más vieja a más nueva, sin modificar el vector original
 export const ordenPorCreacion = (tareas: Tarea[]): Tarea[] => {
     return tareas.slice().sort((a, b) => 
         a.fechaCreacion.getTime() - b.fechaCreacion.getTime()
     );
 };
 
-export const TareasVencidas = (tareas: Tarea[]): Tarea[] => {
+// tareas vencidas
+export const filtrarVencidas = (tareas: Tarea[]): Tarea[] => {
     const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
 
-    return tareas.filter(tarea => {
-        // 1. Debe tener una fecha de vencimiento.
-        if (!tarea.fechaVencimiento) return false;
+    const filtradas = tareas.filter(tarea => {
+        if (!tarea.fechaVencimiento || tarea.fechaVencimiento === 'sin fecha') return false;
+        // Si ya terminó o se canceló, no cuenta como vencida
+        if (tarea.estado === 'terminada' || tarea.estado === 'cancelada') return false;
 
-        // 2. Comparamos si la fecha de vencimiento (string AAAA-MM-DD) es anterior a hoy.
-        // Convertimos el string a Date para una comparación precisa.
-        const fechaVencimiento = new Date(tarea.fechaVencimiento);
-        
-        // 3. Solo si NO está terminada, la consideramos vencida.
-        return fechaVencimiento < hoy && tarea.estado !== 'terminada';
+        const fechaVenc = parseFechaLocal(tarea.fechaVencimiento);
+        return fechaVenc < hoy;
     });
+
+    // se ordenan las tareas antes de devolverlas
+    return ordenPorCreacion(filtradas);
 };
 
-export const AltaPrioridad = (tareas: Tarea[]): Tarea[] => {
-    const ahora = Date.now();
-    // 7 días en milisegundos
-    const limitePrioridad = ahora + (7 * 24 * 60 * 60 * 1000); 
+// alta prioridad (vencen en 7 días)
+export const filtrarAltaPrioridad = (tareas: Tarea[]): Tarea[] => {
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    
+    const limite = new Date(hoy);
+    limite.setDate(limite.getDate() + 7); // Próximos 7 días
 
-    return tareas.filter(tarea => {
-        // 1. Debe tener una fecha de vencimiento.
-        if (!tarea.fechaVencimiento) return false;
+    const filtradas = tareas.filter(tarea => {
+        if (!tarea.fechaVencimiento || tarea.fechaVencimiento === 'sin fecha') return false;
+        if (tarea.estado === 'terminada' || tarea.estado === 'cancelada') return false;
 
-        const fechaVencimientoMs = new Date(tarea.fechaVencimiento).getTime();
-        
-        // 2. La fecha de vencimiento debe estar entre "ahora" y "limitePrioridad" (7 días).
-        // 3. No debe estar terminada.
-        return (
-            fechaVencimientoMs > ahora && 
-            fechaVencimientoMs <= limitePrioridad &&
-            tarea.estado !== 'terminada'
-        );
+        const fechaVenc = parseFechaLocal(tarea.fechaVencimiento);
+        return fechaVenc >= hoy && fechaVenc <= limite;
     });
+
+    // ordenar
+    return ordenPorCreacion(filtradas);
 };
 
-// el orden debe ser para todas las opciones
-// falta ver tareas por estado
-// LÓGICO | lo voy a revisar cuando den la teoria del tema -martina
+// estado 
+export const filtrarPorEstado = (tareas: Tarea[], estadoBuscado: EstadoTarea): Tarea[] => {
+    const filtradas = tareas.filter(t => t.estado === estadoBuscado);
+    
+    // ordenar
+    return ordenPorCreacion(filtradas);
+};

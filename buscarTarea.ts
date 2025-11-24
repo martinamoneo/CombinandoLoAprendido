@@ -22,5 +22,3 @@ export const buscarTarea = (tareas: Tarea[], terminoBusqueda: string): Tarea[] =
         return coincideEnTitulo || coincideEnDescripcion;
     });
 };
-
-// LÓGICO | lo voy a revisar cuando den la teoria del tema -martina
