@@ -11,6 +11,7 @@ import {
     filtrarPorEstado, 
     ordenPorCreacion 
 } from './verTarea';
+import { traducirEstado } from './traduccionTarea'; 
 
 import { guardar, cargar } from './persistencia';
 import { randomUUID } from 'crypto';
@@ -40,8 +41,8 @@ export class GestorTareas {
         // le pasa esos datos a la funcion pura
         const datosCompletos: DatosCrearTarea = {
             ...datosUsuario,
-            id: idUnico,           // Inyectamos el UUID
-            fechaActual: fechaDeHoy // Inyectamos la Fecha
+            id: idUnico,           // ponemos el id
+            fechaActual: fechaDeHoy // ponemos la fecha de creación
         };
 
         // se crea la nueva tarea completa
@@ -104,31 +105,30 @@ export class GestorTareas {
     public buscar(termino: string): Tarea[] {
         // llama a la funcion buscarTarea
         const resultados = buscarTarea(this.tasks, termino);
-        // Ordenamos el resultado antes de entregarlo
+        // se ordena el resultado para mostrar
         return ordenPorCreacion(resultados);
     }
 
     public obtenerVencidas(): Tarea[] {
-        // Delega a la regla lógica pura
+        // llama a la funcion filtrarVencidas
         return filtrarVencidas(this.tasks);
     }
 
     public obtenerPrioridadAlta(): Tarea[] {
-        // Delega a la regla lógica pura
+        // llama a la funcion filtrarAltaPrioridad
         return filtrarAltaPrioridad(this.tasks);
     }
 
-    public obtenerPorEstado(estadoLetra: string): Tarea[] { // REVISAR PORQ NO ENTIENDO 
-        // Pequeño traductor local para conectar el menú con la lógica
-        // (Podrías mover esto a traducciones.ts si quisieras ser muy estricto)
-        const mapa: any = { 'P': 'pendiente', 'E': 'en curso', 'T': 'terminada', 'C': 'cancelada' };
-        const estadoReal = mapa[estadoLetra] || 'pendiente';
-        
+    public obtenerPorEstado(estadoLetra: string): Tarea[] { 
+        // se traduce la letra al estado completo
+        const estadoReal = traducirEstado(estadoLetra);
+    
+        // llama a la funcion filtrarPorEstado
         return filtrarPorEstado(this.tasks, estadoReal);
     }
 
     public obtenerEstadisticas(): EstadisticasTareas {
-        // Delega el cálculo matemático al especialista funcional
+        // llama a la funcion calcularEstadisticas
         return calcularEstadisticas(this.tasks);
     }
 }

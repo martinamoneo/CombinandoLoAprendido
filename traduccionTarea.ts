@@ -21,3 +21,5 @@ export const traducirDificultad = (input: string = ""): DificultadTarea => {
   };
   return mapa[input] || 'facil';
 };
+
+// se usa en crearTarea y editarTarea para traducir las entradas del usuario

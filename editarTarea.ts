@@ -2,14 +2,11 @@ import { Tarea } from './tarea';
 import { traducirEstado, traducirDificultad } from './traduccionTarea.ts';
 
 export interface DatosEditarTarea {
-  nombre: string;
+  nombre?: string;
   descripcion?: string;
-  estado: string;
-  dificultad: string;
+  estado?: string;
+  dificultad?: string;
   fechaVencimiento?: string;
-  // El Gestor (POO) debe generar estos y pasarlos a la función pura.
-  id: string; // El UUID
-  fechaActual: Date; // El new Date()
 }
 
 export const actualizarTarea = (
