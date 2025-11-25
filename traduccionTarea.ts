@@ -1,4 +1,4 @@
-import { EstadoTarea, DificultadTarea } from './tarea.ts';
+import { EstadoTarea, DificultadTarea } from './tarea';
 
 export const traducirEstado = (input: string = ""): EstadoTarea => {
   const mapa: Record<string, EstadoTarea> = {

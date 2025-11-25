@@ -6,6 +6,11 @@
   "devDependencies": {
     "@types/node": "^24.10.1",
     "@types/prompt-sync": "^4.2.3",
-    "@types/uuid": "^10.0.0"
-  }
+    "@types/uuid": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+  "start": "ts-node index.ts"
+}
 }

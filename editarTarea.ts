@@ -1,5 +1,5 @@
 import { Tarea } from './tarea';
-import { traducirEstado, traducirDificultad } from './traduccionTarea.ts';
+import { traducirEstado, traducirDificultad } from './traduccionTarea';
 
 export interface DatosEditarTarea {
   nombre?: string;

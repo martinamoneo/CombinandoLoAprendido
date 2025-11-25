@@ -1,5 +1,5 @@
-import { Tarea } from './tarea.ts';
-import { traducirEstado, traducirDificultad } from './traduccionTarea.ts';
+import { Tarea } from './tarea';
+import { traducirEstado, traducirDificultad } from './traduccionTarea';
 
 // Interface auxiliar para definir los datos que recolectan Index y  GestorTareas
 export interface DatosCrearTarea {
