@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "id": "8dd5e11d-39a1-4ae1-9bdb-1b3f48c46e84",
+    "nombre": "hola",
+    "descripcion": "adios",
+    "estado": "pendiente",
+    "dificultad": "fácil",
+    "fechaVencimiento": "sin fecha",
+    "fechaCreacion": "2025-11-26T22:09:31.624Z",
+    "fechaModificacion": "2025-11-26T22:09:31.624Z"
+  },
+  {
+    "id": "c8807ec5-fbbc-4d2d-aaab-e09e0f64a76f",
+    "nombre": "hello",
+    "descripcion": "adios",
+    "estado": "cancelada",
+    "dificultad": "difícil",
+    "fechaVencimiento": "sin fecha",
+    "fechaCreacion": "2025-11-26T22:09:51.019Z",
+    "fechaModificacion": "2025-11-26T22:09:51.019Z"
+  }
+]

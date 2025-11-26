@@ -15,11 +15,9 @@ const mostrarLista = (tareas: Tarea[]) => {
   
   console.log("------------------------------------------------");
   tareas.forEach((t, index) => { // recorre las tareas
-    let fechaStr = "[Sin fecha]"; // defecto
-    if (t.fechaVencimiento && t.fechaVencimiento !== 'sin fecha') { // si tiene fecha se cambia
-      fechaStr = `[${t.fechaVencimiento}]`;
-    }
-    // Muestra: 1. [2025-11-15] Comprar pan (pendiente)
+    const fecha = new Date(t.fechaCreacion); // buscamos fecha de creación
+    const fechaStr = `[${fecha.toLocaleDateString()}]`; // la ponemos en forma dd/mm/aaaa
+    // muestra: 1. [26/11/2025] Nombre (Estado)
     console.log(`${index + 1}. ${fechaStr} ${t.nombre} (${t.estado})`);
   });
   console.log("------------------------------------------------");
@@ -92,6 +90,8 @@ function main(): void {
   let continuar = true;
 
   while (continuar) {
+    console.clear();
+
     mostrarMenu();
     const opcion = parseInt(prompt('Seleccione una opción: '));
 
@@ -121,7 +121,9 @@ function main(): void {
             }
         }
         if (filtro === '0') break;
+
         let listaActual: Tarea[] = [];
+
         if (filtro === 'V') listaActual = gestor.obtenerVencidas();
         else if (filtro === 'P') listaActual = gestor.obtenerPrioridadAlta();
         else if (filtro === 'E') {
@@ -135,6 +137,11 @@ function main(): void {
         // se muestra la lista de tareas
         mostrarLista(listaActual);
 
+        if (listaActual.length === 0) { // si no hay tares 
+            prompt("\nPresione Enter para volver al menú principal..."); 
+            break; 
+        }
+
         // seleccionar tarea para ver detalles / editar
         const numSeleccion = parseInt(prompt("Número de tarea para editar / eliminar (0 volver): "));
         if (numSeleccion > 0 && numSeleccion <= listaActual.length) {
@@ -142,9 +149,11 @@ function main(): void {
             const tareaSeleccionada = listaActual[numSeleccion - 1];
             gestionarAccionesDeTarea(tareaSeleccionada);
         }
+        prompt("\nPresione Enter para volver al menú...");
         break;
 
       case 2: // buscar tarea
+      console.clear();
         const termino = prompt("Ingrese palabra clave: ");
         if (!termino) break; // si no se escribe nada, vuelve al menú
 
@@ -168,9 +177,11 @@ function main(): void {
         } else {
             console.log("No se encontraron coincidencias.");
         }
+        prompt("\nPresione Enter para volver al menú...");
         break;
 
       case 3: // crear tarea
+      console.clear();
         console.log("\n--- NUEVA TAREA ---");
         // validaciones
         let nombre = "";
@@ -178,7 +189,7 @@ function main(): void {
             nombre = prompt("Nombre (Obligatorio, max 100): ");
         }
         const descripcion = prompt("Descripción (Opcional): ");
-        const estado = prompt("Estado [P/E/T/C] (Default P): ");
+        const estado = prompt("Estado [P]endiente, [E]n curso, [T]erminada, [C]ancelada (Default P): ");
         const dificultad = prompt("Dificultad [1/2/3] (Default 1): ");
         const fechaVencimiento = prompt("Fecha Vencimiento AAAA-MM-DD (Opcional): ");
 
@@ -186,9 +197,11 @@ function main(): void {
             nombre, descripcion, estado, dificultad, fechaVencimiento
         });
         console.log("✅ Tarea creada exitosamente.");
+        prompt("\nPresione Enter para volver al menú...");
         break;
 
       case 4: // estadisticas
+      console.clear();
       const stats = gestor.obtenerEstadisticas();
         
         console.log("\n === ESTADÍSTICAS ===");
@@ -210,12 +223,13 @@ function main(): void {
         break;
 
       case 0:
-        console.log('\n👋 Saliendo del programa...');
+        console.log('\n Saliendo del programa...');
         continuar = false;
         break;
 
       default:
         console.log('\n⚠️ Opción inválida.');
+        prompt("Presione Enter...");
     }
   }
 }
