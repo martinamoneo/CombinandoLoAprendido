@@ -1,13 +1,13 @@
 import { writeFileSync, readFileSync } from 'fs'; // 
 import { Tarea } from './tarea';
-const ARCHIVO_DB = './tareas.json'; // arcihvo que sera la BD
+const ARCHIVO_DB = './tareas.json'; // archivo que sera la BD
 
 export const guardar = (tareas: Tarea[]): void => { // escribe la lista de tareas en el archivo Json
   try {
-    // 1. Convierte el array de objetos Tarea a un string JSON "bonito"
+    // convierte la lista de tareas en un string JSON para que se pueda guardar 
     const data = JSON.stringify(tareas, null, 2);
     
-    // 2. Da la instrucción (Imperativo) de escribir en el disco
+    // lo escribe en el archivo
     writeFileSync(ARCHIVO_DB, data, { encoding: 'utf-8' });
     
   } catch (error) {
