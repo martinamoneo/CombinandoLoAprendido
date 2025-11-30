@@ -80,7 +80,7 @@ export class GestorTareas {
     }
 
     public eliminarTarea(id: string): boolean {
-        const cantidadAntes = this.tasks.length;
+        const cantidadAntes = this.tasks.length; // cantidad de tareas que hay antes de eliminar
 
         // eliminar la tarea que coincida con el id
         this.tasks = eliminarTarea(this.tasks, id);
@@ -112,11 +112,13 @@ export class GestorTareas {
     public obtenerVencidas(): Tarea[] {
         // llama a la funcion filtrarVencidas
         return filtrarVencidas(this.tasks);
+        // se ordena en la funcion
     }
 
     public obtenerPrioridadAlta(): Tarea[] {
         // llama a la funcion filtrarAltaPrioridad
         return filtrarAltaPrioridad(this.tasks);
+        // se ordena en la funcion
     }
 
     public obtenerPorEstado(estadoLetra: string): Tarea[] { 

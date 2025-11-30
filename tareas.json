@@ -18,5 +18,15 @@
     "fechaVencimiento": "sin fecha",
     "fechaCreacion": "2025-11-26T22:09:51.019Z",
     "fechaModificacion": "2025-11-26T22:09:51.019Z"
+  },
+  {
+    "id": "d3f1c826-3bb3-431d-9984-66ff0413d0cb",
+    "nombre": "prueba de errores",
+    "descripcion": "aca veo los rerroes(si hay)",
+    "estado": "pendiente",
+    "dificultad": "difícil",
+    "fechaVencimiento": "2025 12 12",
+    "fechaCreacion": "2025-11-30T23:27:18.856Z",
+    "fechaModificacion": "2025-11-30T23:27:18.856Z"
   }
 ]

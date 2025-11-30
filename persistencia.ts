@@ -17,15 +17,13 @@ export const guardar = (tareas: Tarea[]): void => { // escribe la lista de tarea
 
 export const cargar = (): Tarea[] => { // Lee el archivo JSON y lo convierte de nuevo en un array de Tareas.
   try {
-    // 1. Da la instrucción (Imperativo) de leer el disco
+    // lee el disco 
     const data = readFileSync(ARCHIVO_DB, { encoding: 'utf-8' });
     
-    // 2. Convierte el string JSON en un array de objetos
+    // convierte lo que esta en el archivo a un array de tareas
     const tareasGuardadas = JSON.parse(data);
 
-    // 3. ¡IMPORTANTE! Re-hidratar las fechas.
-    // JSON no guarda objetos 'Date', guarda strings.
-    // Debemos convertir esos strings de vuelta a 'Date'.
+    // el archivo json guarda las fechas en string, por lo que hay que convertirlas de nuevo a Date
     return tareasGuardadas.map((tarea: any) => ({
       ...tarea,
       fechaCreacion: new Date(tarea.fechaCreacion),
@@ -33,8 +31,7 @@ export const cargar = (): Tarea[] => { // Lee el archivo JSON y lo convierte de 
     }));
 
   } catch (error) {
-    // Si el archivo no existe (primera vez que corre) o está vacío,
-    // devuelve una lista vacía.
+    // si no hay tareas o hay un error, no se devuelve nada
     return [];
   }
 };

@@ -4,7 +4,7 @@ import { Tarea } from './tarea';
 import { mostrarDetalles } from './detallesTarea';
 
 const prompt = promptSync();
-const gestor = new GestorTareas(); // Instancia única del "Gerente" (POO)
+const gestor = new GestorTareas(); // llama al gestor de tareas
 
 // mostrar las tareas más simple
 const mostrarLista = (tareas: Tarea[]) => {

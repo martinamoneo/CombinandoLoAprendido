@@ -4,7 +4,7 @@ export const buscarTarea = (tareas: Tarea[], terminoBusqueda: string): Tarea[] =
     // Convertimos el término de búsqueda a minúsculas y eliminamos espacios extra
     const terminoLower = terminoBusqueda.toLowerCase().trim();
 
-    // Si el término está vacío, devolvemos un array vacío (o la lista completa, si se prefiere).
+    // Si el término está vacío, devolvemos un array vacío
     if (terminoLower.length === 0) {
         return [];
     }
