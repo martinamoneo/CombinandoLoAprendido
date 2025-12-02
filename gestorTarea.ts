@@ -56,7 +56,7 @@ export class GestorTareas {
     }
 
     public editarTarea(id: string, cambios: DatosEditarTarea): boolean {
-        // Buscamos la tarea original
+        // se busca la tarea original
         const tareaOriginal = this.tasks.find(t => t.id === id);
         
         if (!tareaOriginal) return false; // No se encontró
@@ -97,7 +97,7 @@ export class GestorTareas {
 
     // --- Ver, Buscar, Estadísticas ---
 
-    public obtenerTodas(): Tarea[] {
+    public obtenerTodas(): Tarea[] { 
         // se devuelve la lista ordenada por creación
         return ordenPorCreacion(this.tasks);
     }
@@ -109,16 +109,18 @@ export class GestorTareas {
         return ordenPorCreacion(resultados);
     }
 
-    public obtenerVencidas(): Tarea[] {
+    public obtenerVencidas(): Tarea[] { 
         // llama a la funcion filtrarVencidas
-        return filtrarVencidas(this.tasks);
-        // se ordena en la funcion
+        const resultados = filtrarVencidas(this.tasks);
+        // se ordena
+        return ordenPorCreacion(resultados);
     }
 
     public obtenerPrioridadAlta(): Tarea[] {
         // llama a la funcion filtrarAltaPrioridad
-        return filtrarAltaPrioridad(this.tasks);
-        // se ordena en la funcion
+        const resultados = filtrarAltaPrioridad(this.tasks);
+        // se ordena
+        return ordenPorCreacion(resultados);
     }
 
     public obtenerPorEstado(estadoLetra: string): Tarea[] { 
@@ -126,10 +128,12 @@ export class GestorTareas {
         const estadoReal = traducirEstado(estadoLetra);
     
         // llama a la funcion filtrarPorEstado
-        return filtrarPorEstado(this.tasks, estadoReal);
+        const resultados = filtrarPorEstado(this.tasks, estadoReal);
+        // se ordena
+        return ordenPorCreacion(resultados);
     }
 
-    public obtenerEstadisticas(): EstadisticasTareas {
+    public obtenerEstadisticas(): EstadisticasTareas { 
         // llama a la funcion calcularEstadisticas
         return calcularEstadisticas(this.tasks);
     }

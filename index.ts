@@ -4,7 +4,7 @@ import { Tarea } from './tarea';
 import { mostrarDetalles } from './detallesTarea';
 
 const prompt = promptSync();
-const gestor = new GestorTareas(); // llama al gestor de tareas
+const gestor = new GestorTareas(); // llama a gestorTarea para manejar las tareas
 
 // mostrar las tareas más simple
 const mostrarLista = (tareas: Tarea[]) => {
@@ -281,9 +281,9 @@ function main(): void {
         console.log(`Total de Tareas: ${stats.totalTareas}`);
         
         console.log("\n--- Por Estado ---");
-        // Iteramos el objeto de estadísticas (Estructurado)
+        // el porcentaje se muestra con un solo decimal
         for (const [estado, data] of Object.entries(stats.porEstado)) {
-            // Formateamos el porcentaje aquí (Vista)
+            // muestra el estado, la cantidad y el porcentaje
             console.log(`- ${estado}: ${data.cantidad} (${data.porcentaje.toFixed(1)}%)`);
         }
 
@@ -291,7 +291,7 @@ function main(): void {
         for (const [dif, data] of Object.entries(stats.porDificultad)) {
             console.log(`- ${dif}: ${data.cantidad} (${data.porcentaje.toFixed(1)}%)`);
         }
-        // Pausa para leer
+        
         prompt("\nPresione Enter para volver...");
         break;
 
@@ -301,11 +301,11 @@ function main(): void {
         break;
 
       default:
-        console.log('\n⚠️ Opción inválida.');
+        console.log('\n Opción inválida.');
         prompt("Presione Enter...");
     }
   }
 }
 
-// 🚀 Ejecución del programa
+// iniciar el programa
 main();

@@ -1,21 +1,21 @@
 import { Tarea } from './tarea';
 import { traducirEstado, traducirDificultad } from './traduccionTarea';
 
-// Interface auxiliar para definir los datos que recolectan Index y  GestorTareas
+// interface auxiliar para definir los datos que recolectan Index y GestorTareas
 export interface DatosCrearTarea {
   nombre: string;
   descripcion?: string;
   estado: string;
   dificultad: string;
   fechaVencimiento?: string;
-  // El Gestor (POO) debe generar estos y pasarlos a la función pura.
-  id: string; // El UUID
-  fechaActual: Date; // El new Date()
+  // el gestor de tareas pasa estos datos (porq son impuros)
+  id: string; // UUID
+  fechaActual: Date;
 }
 
 export const crearNuevaTarea = (data: DatosCrearTarea): Tarea => {
   
-  // valida nombre y descripcion
+  // valida nombre y descripción
   if (!data.nombre || data.nombre.length === 0) {
     throw new Error("El nombre es obligatorio.");
   }
@@ -28,14 +28,14 @@ export const crearNuevaTarea = (data: DatosCrearTarea): Tarea => {
 
   // crea el objeto tarea
   const nuevaTarea: Tarea = {
-    id: data.id, // Usa el UUID inyectado
+    id: data.id, // uuid pasado por gestorTarea
     nombre: data.nombre,
     descripcion: data.descripcion || 'sin descripcion',
     estado: traducirEstado(data.estado),
     dificultad: traducirDificultad(data.dificultad),
     fechaVencimiento: data.fechaVencimiento || 'sin fecha',
-    fechaCreacion: data.fechaActual, // Usa la fecha inyectada
-    fechaModificacion: data.fechaActual, // Al crear, es la misma
+    fechaCreacion: data.fechaActual, // fecha actual pasada por gestorTarea
+    fechaModificacion: data.fechaActual, // misma que fechaCreacion al inicio
   };
   
   // devuelve la nueva tarea inmutable (no se puede cambiar) 

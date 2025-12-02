@@ -1,7 +1,7 @@
 import { Tarea } from './tarea';
 import { traducirEstado, traducirDificultad } from './traduccionTarea';
 
-export interface DatosEditarTarea {
+export interface DatosEditarTarea { // permite que los campos queden como estan si no se modifican
   nombre?: string;
   descripcion?: string;
   estado?: string;
@@ -12,7 +12,7 @@ export interface DatosEditarTarea {
 export const actualizarTarea = (
   tareaOriginal: Tarea,
   nuevosDatos: DatosEditarTarea,
-  fechaDeEdicion: Date // Impureza inyectada (desde el Gestor POO)
+  fechaDeEdicion: Date // fecha que da gestorTarea
 ): Tarea => {
   // se crea una copia de la tarea original
   const tareaActualizada: Tarea = { ...tareaOriginal };

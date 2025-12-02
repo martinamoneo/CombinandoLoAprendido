@@ -15,7 +15,7 @@ export const guardar = (tareas: Tarea[]): void => { // escribe la lista de tarea
   }
 };
 
-export const cargar = (): Tarea[] => { // Lee el archivo JSON y lo convierte de nuevo en un array de Tareas.
+export const cargar = (): Tarea[] => { // lee el archivo JSON y lo pasa a un vector de tareas
   try {
     // lee el disco 
     const data = readFileSync(ARCHIVO_DB, { encoding: 'utf-8' });

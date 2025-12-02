@@ -27,7 +27,7 @@ export const mostrarDetalles = (tarea: Tarea): string => {
   const descripcion = tarea.descripcion || "Sin descripción";
   const vencimiento = tarea.fechaVencimiento || "Sin fecha";
   
-  // para que las fechas 
+  // hace que la fecha se vea aaaa-mm-dd hh:mm:ss
   const fechaCreacionStr = tarea.fechaCreacion.toLocaleString('es-AR');
   const fechaModifStr = tarea.fechaModificacion.toLocaleString('es-AR');
   

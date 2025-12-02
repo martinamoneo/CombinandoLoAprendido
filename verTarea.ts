@@ -14,20 +14,17 @@ export const ordenPorCreacion = (tareas: Tarea[]): Tarea[] => {
 
 // tareas vencidas
 export const filtrarVencidas = (tareas: Tarea[]): Tarea[] => {
-    const hoy = new Date();
+    const hoy = new Date(); 
     hoy.setHours(0, 0, 0, 0);
 
-    const filtradas = tareas.filter(tarea => {
+    return tareas.filter(tarea => {
         if (!tarea.fechaVencimiento || tarea.fechaVencimiento === 'sin fecha') return false;
-        // Si ya terminó o se canceló, no cuenta como vencida
+        // si la tarea está terminada o cancelada, no cuenta
         if (tarea.estado === 'terminada' || tarea.estado === 'cancelada') return false;
-
-        const fechaVenc = parseFechaLocal(tarea.fechaVencimiento);
+        // compara fechas para ver si está vencida
+        const fechaVenc = new Date(tarea.fechaVencimiento + "T00:00:00");
         return fechaVenc < hoy;
     });
-
-    // se ordenan las tareas antes de devolverlas
-    return ordenPorCreacion(filtradas);
 };
 
 // alta prioridad (vencen en 7 días)
@@ -38,22 +35,20 @@ export const filtrarAltaPrioridad = (tareas: Tarea[]): Tarea[] => {
     const limite = new Date(hoy);
     limite.setDate(limite.getDate() + 7); // Próximos 7 días
 
-    const filtradas = tareas.filter(tarea => {
+    return tareas.filter(tarea => {
+        // si no tiene fecha, descartada
         if (!tarea.fechaVencimiento || tarea.fechaVencimiento === 'sin fecha') return false;
+        // si está terminada o cancelada, descartada 
         if (tarea.estado === 'terminada' || tarea.estado === 'cancelada') return false;
 
         const fechaVenc = parseFechaLocal(tarea.fechaVencimiento);
         return fechaVenc >= hoy && fechaVenc <= limite;
     });
 
-    // ordenar
-    return ordenPorCreacion(filtradas);
+    
 };
 
 // estado 
 export const filtrarPorEstado = (tareas: Tarea[], estadoBuscado: EstadoTarea): Tarea[] => {
-    const filtradas = tareas.filter(t => t.estado === estadoBuscado);
-    
-    // ordenar
-    return ordenPorCreacion(filtradas);
+    return tareas.filter(t => t.estado === estadoBuscado);
 };

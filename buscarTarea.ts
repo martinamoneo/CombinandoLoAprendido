@@ -1,24 +1,24 @@
 import { Tarea } from './tarea';
 
 export const buscarTarea = (tareas: Tarea[], terminoBusqueda: string): Tarea[] => {
-    // Convertimos el término de búsqueda a minúsculas y eliminamos espacios extra
+    // pasamos todo a minuscula y borramos espacios
     const terminoLower = terminoBusqueda.toLowerCase().trim();
 
-    // Si el término está vacío, devolvemos un array vacío
+    // si no hay nada, no se devuelve nada
     if (terminoLower.length === 0) {
         return [];
     }
 
-    // Usamos .filter() para crear el nuevo array inmutable.
+    // .filter crea un vector con las tareas que cumplen la condición
     return tareas.filter(tarea => {
         const tituloLower = tarea.nombre.toLowerCase();
         const descripcionLower = tarea.descripcion ? tarea.descripcion.toLowerCase() : '';
 
-        // Comprobamos si el título o la descripción incluyen el término.
+        // buscamos la palabra en el título y la descripción
         const coincideEnTitulo = tituloLower.includes(terminoLower);
         const coincideEnDescripcion = descripcionLower.includes(terminoLower);
 
-        // Devolvemos true si coincide en al menos uno de los campos.
+        // se devuelven las tareas que coinciden en título o descripción
         return coincideEnTitulo || coincideEnDescripcion;
     });
 };

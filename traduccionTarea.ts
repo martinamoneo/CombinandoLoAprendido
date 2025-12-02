@@ -7,7 +7,7 @@ export const traducirEstado = (input: string = ""): EstadoTarea => {
     'T': 'terminada',
     'C': 'cancelada',
     'V': 'vencida',
-    '': 'pendiente' // Default si el usuario presiona Enter
+    '': 'pendiente' // default cuando el usuario presiona enter
   };
   return mapa[input.toUpperCase()] || 'pendiente';
 };
@@ -17,7 +17,7 @@ export const traducirDificultad = (input: string = ""): DificultadTarea => {
     '1': 'fácil',
     '2': 'media',
     '3': 'difícil',
-    '': 'fácil' // Default si el usuario presiona Enter
+    '': 'fácil' // default cuando el usuario presiona enter
   };
   return mapa[input] || 'facil';
 };

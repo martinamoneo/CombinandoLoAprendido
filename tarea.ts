@@ -4,11 +4,11 @@ export type DificultadTarea = 'fácil' | 'media' | 'difícil';
 
 export interface Tarea {
   readonly id: string; // readonly porque el UUID no debe cambiar nunca
-  nombre: string; // La lógica en 'Crear Tarea' validará los 100 caracteres.
+  nombre: string; // se valida en crearTarea
   descripcion?: string; 
-  estado: EstadoTarea; //La lógica en 'Crear Tarea' pondrá 'pendiente' por defecto.
-  dificultad: DificultadTarea; // La lógica en 'Crear Tarea'pondrá 'facil' por defecto.
-  fechaVencimiento?: string; // Acepta un string "AAAA-MM-DD"
+  estado: EstadoTarea; // pendiente por defecto en crearTarea
+  dificultad: DificultadTarea; // facil por defecto en crearTarea
+  fechaVencimiento?: string; // aaaa-mm-dd
   readonly fechaCreacion: Date; 
   fechaModificacion: Date;
 }
