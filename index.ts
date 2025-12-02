@@ -22,7 +22,7 @@ const mostrarLista = (tareas: Tarea[]) => {
   });
   console.log("------------------------------------------------");
 };
-
+// funciones auxiliares
 function gestionarAccionesDeTarea(tareaSeleccionada: Tarea): void {
     
     // mostrar detalles
@@ -43,12 +43,14 @@ function gestionarAccionesDeTarea(tareaSeleccionada: Tarea): void {
         
         // editar
         else if (accion === 'E') {
-            console.log("Deje vacío para mantener el valor actual.");
+            console.log("Instrucciones: Enter para mantener. Escriba 'b' para borrar el dato.");
             const nombre = prompt("Nuevo Nombre: ") || undefined;
-            const descripcion = prompt("Nueva Descripción: ") || undefined;
-            const estado = prompt("Nuevo Estado [P/E/T/C]: ") || undefined;
-            const dificultad = prompt("Nueva Dificultad [1/2/3]: ") || undefined;
-            const fechaVenc = prompt("Nueva Fecha Venc. (AAAA-MM-DD): ") || undefined;
+            const descIngresada = prompt("Nueva Descripción: ");
+            const descripcion = descIngresada.toLowerCase() === 'b' ? "" : (descIngresada || undefined);
+            const estado = prompt("Nuevo Estado [P]endiente, [E]n curso, [T]erminada, [C]ancelada: ") || undefined;
+            const dificultad = prompt("Nueva Dificultad [1: fácil /2: media /3: difícil]: ") || undefined;
+            const fechaIngresada = prompt("Nueva Fecha Venc. (AAAA-MM-DD): ");
+            const fechaVenc = fechaIngresada.toLowerCase() === 'b' ? "" : (fechaIngresada || undefined);
 
             gestor.editarTarea(tareaSeleccionada.id, {
                 nombre, descripcion, estado, dificultad, fechaVencimiento: fechaVenc
@@ -72,6 +74,58 @@ function gestionarAccionesDeTarea(tareaSeleccionada: Tarea): void {
         else {
             console.log("❌ Opción inválida. Ingrese E, D o 0.");
         }
+    }
+}
+
+function pedirFechaValida(mensaje: string, esEdicion: boolean = false): string | undefined {
+    while (true) {
+        const input = prompt(mensaje).trim();
+
+        // caso 1: enter (dejar como está)
+        if (input === "") {
+            return undefined; // mantiene el valor
+        }
+
+        // caso 2: borrar fecha (solo en edición)
+        if (esEdicion && (input.toUpperCase() === 'B')) {
+            return ""; // borra la fecha
+        }
+
+        // caso 3: ingresa una fecha
+        // valida que sea aaaa-mm-dd
+        const regex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!regex.test(input)) {
+            console.log("Formato inválido. Use AAAA-MM-DD (ej: 2025-12-31).");
+            continue; // repite la peticion hasta que se ingrese algo valido
+        }
+
+        // valida que la fecha no sea anterior a hoy
+        const fechaIngresada = new Date(input + "T00:00:00");
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0); // Reseteamos la hora de hoy a medianoche
+
+        if (isNaN(fechaIngresada.getTime())) {
+            console.log("Fecha inexistente.");
+        } else if (fechaIngresada < hoy) {
+            console.log("La fecha no puede ser anterior a hoy.");
+        } else {
+            // si todo funciona acepta la fecha
+            return input;
+        }
+    }
+}
+
+function pedirOpcionValida(mensaje: string, opcionesValidas: string[]): string {
+    while (true) {
+        const input = prompt(mensaje).toUpperCase().trim();
+
+        // si lo que ingreso esta en dentro de las opciones
+        if (opcionesValidas.includes(input)) {
+            return input; // si es valido, lo devuelve
+        }
+
+        // si no esta en las opciones, muestra error
+        console.log(`Opción inválida. Solo se permite: [${opcionesValidas.filter(o => o !== '').join(', ')}] o Enter (si estás creando o editando).`);
     }
 }
 
@@ -120,14 +174,16 @@ function main(): void {
                 // El bucle vuelve a empezar automáticamente
             }
         }
-        if (filtro === '0') break;
+        if (filtro === '0') break; // si pone 0, se vuelve
 
-        let listaActual: Tarea[] = [];
+        let listaActual: Tarea[] = []; // busca la lista segun el filtro
 
         if (filtro === 'V') listaActual = gestor.obtenerVencidas();
         else if (filtro === 'P') listaActual = gestor.obtenerPrioridadAlta();
         else if (filtro === 'E') {
-             const letra = prompt("Ingrese la letra ([P]endiente, [E]n curso, [T]erminada, [C]ancelada): ").toUpperCase();
+             const letra = pedirOpcionValida (
+                "Ingrese la letra ([P]endiente, [E]n curso, [T]erminada, [C]ancelada): ", 
+                    ['P', 'E', 'T', 'C']).toUpperCase();
              listaActual = gestor.obtenerPorEstado(letra);
         } 
         else if (filtro === 'T') {
@@ -143,18 +199,26 @@ function main(): void {
         }
 
         // seleccionar tarea para ver detalles / editar
-        const numSeleccion = parseInt(prompt("Número de tarea para editar / eliminar (0 volver): "));
-        if (numSeleccion > 0 && numSeleccion <= listaActual.length) {
-            // se le pone un numero a cada tarea
+        const numSeleccion = parseInt(prompt("Número de tarea para ver detalles (0 volver): "));
+        // caso 1: volver
+        if (numSeleccion === 0) {
+            break; 
+        }
+        // caso 2: número válido
+        else if (numSeleccion > 0 && numSeleccion <= listaActual.length) {
             const tareaSeleccionada = listaActual[numSeleccion - 1];
             gestionarAccionesDeTarea(tareaSeleccionada);
+        }
+        // caso 3: número inválido
+        else {
+            console.log("Número inválido. Esa tarea no existe.");
         }
         prompt("\nPresione Enter para volver al menú...");
         break;
 
       case 2: // buscar tarea
       console.clear();
-        const termino = prompt("Ingrese palabra clave: ");
+        const termino = prompt("Ingrese palabra clave (o Enter para volver): ");
         if (!termino) break; // si no se escribe nada, vuelve al menú
 
         // se hace la busqueda
@@ -166,7 +230,7 @@ function main(): void {
             mostrarLista(resultados);
             
             // ver detalles / editar tarea seleccionada
-            const numSeleccion = parseInt(prompt("Número de tarea para ver detalles (0 para volver): "));
+            const numSeleccion = parseInt(prompt("Número de tarea para ver acciones (0 para volver): "));
             
             if (numSeleccion > 0 && numSeleccion <= resultados.length) {
                 // se le da un numero a cada tarea
@@ -189,13 +253,22 @@ function main(): void {
             nombre = prompt("Nombre (Obligatorio, max 100): ");
         }
         const descripcion = prompt("Descripción (Opcional): ");
-        const estado = prompt("Estado [P]endiente, [E]n curso, [T]erminada, [C]ancelada (Default P): ");
-        const dificultad = prompt("Dificultad [1/2/3] (Default 1): ");
-        const fechaVencimiento = prompt("Fecha Vencimiento AAAA-MM-DD (Opcional): ");
+        const estado = pedirOpcionValida (
+            "Estado [P]endiente, [E]n curso, [T]erminada, [C]ancelada (Default P): ", 
+                ['P', 'E', 'T', 'C', '']);
+        const dificultad = pedirOpcionValida (
+            "Dificultad [1: fácil /2: media /3: difícil] (Default 1): ", 
+                ['1', '2', '3', '']);
+        const fechaVencimiento = pedirFechaValida("Fecha Vencimiento AAAA-MM-DD (Opcional): ", false);
 
         gestor.crearTarea({
-            nombre, descripcion, estado, dificultad, fechaVencimiento
+            nombre, 
+            descripcion, 
+            estado, 
+            dificultad, 
+            fechaVencimiento: fechaVencimiento || undefined
         });
+
         console.log("✅ Tarea creada exitosamente.");
         prompt("\nPresione Enter para volver al menú...");
         break;

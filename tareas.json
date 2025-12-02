@@ -22,11 +22,21 @@
   {
     "id": "d3f1c826-3bb3-431d-9984-66ff0413d0cb",
     "nombre": "prueba de errores",
-    "descripcion": "aca veo los rerroes(si hay)",
+    "descripcion": "aca veo los errores",
+    "estado": "en curso",
+    "dificultad": "media",
+    "fechaVencimiento": "kkk",
+    "fechaCreacion": "2025-11-30T23:27:18.856Z",
+    "fechaModificacion": "2025-12-01T19:07:22.305Z"
+  },
+  {
+    "id": "28ad884d-70ba-4773-a43f-5f2588f5c638",
+    "nombre": "martina",
+    "descripcion": "nada",
     "estado": "pendiente",
     "dificultad": "difícil",
-    "fechaVencimiento": "2025 12 12",
-    "fechaCreacion": "2025-11-30T23:27:18.856Z",
-    "fechaModificacion": "2025-11-30T23:27:18.856Z"
+    "fechaVencimiento": "2025-12-23",
+    "fechaCreacion": "2025-12-02T01:49:54.453Z",
+    "fechaModificacion": "2025-12-02T01:49:54.453Z"
   }
 ]
