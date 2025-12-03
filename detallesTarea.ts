@@ -17,7 +17,7 @@ const mapDificultad: Record<DificultadTarea, string> = {
 export const mostrarDetalles = (tarea: Tarea): string => {
   
   if (!tarea) { // si no existe tarea
-    return "❌ Tarea no encontrada.";
+    return "Tarea no encontrada.";
   }
 
   // valores default

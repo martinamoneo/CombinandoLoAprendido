@@ -72,7 +72,7 @@ function gestionarAccionesDeTarea(tareaSeleccionada: Tarea): void {
             }
         }
         else {
-            console.log("❌ Opción inválida. Ingrese E, D o 0.");
+            console.log("Opción inválida. Ingrese E, D o 0.");
         }
     }
 }
@@ -199,7 +199,7 @@ function main(): void {
         }
 
         // seleccionar tarea para ver detalles / editar
-        const numSeleccion = parseInt(prompt("Número de tarea para ver detalles (0 volver): "));
+        const numSeleccion = parseInt(prompt("Número de tarea para ver acciones (0 volver): "));
         // caso 1: volver
         if (numSeleccion === 0) {
             break; 

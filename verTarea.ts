@@ -15,9 +15,10 @@ export const ordenPorCreacion = (tareas: Tarea[]): Tarea[] => {
 // tareas vencidas
 export const filtrarVencidas = (tareas: Tarea[]): Tarea[] => {
     const hoy = new Date(); 
-    hoy.setHours(0, 0, 0, 0);
+    hoy.setHours(0, 0, 0, 0); //
 
     return tareas.filter(tarea => {
+        // si no tiene fecha, no cuenta
         if (!tarea.fechaVencimiento || tarea.fechaVencimiento === 'sin fecha') return false;
         // si la tarea está terminada o cancelada, no cuenta
         if (tarea.estado === 'terminada' || tarea.estado === 'cancelada') return false;
