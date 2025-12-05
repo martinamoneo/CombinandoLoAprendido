@@ -230,7 +230,7 @@ function main(): void {
             mostrarLista(resultados);
             
             // ver detalles / editar tarea seleccionada
-            const numSeleccion = parseInt(prompt("Número de tarea para ver acciones (0 para volver): "));
+            const numSeleccion = parseInt(prompt("Número de tarea para ver detalles (0 para volver): "));
             
             if (numSeleccion > 0 && numSeleccion <= resultados.length) {
                 // se le da un numero a cada tarea
