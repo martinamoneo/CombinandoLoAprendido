@@ -38,5 +38,25 @@
     "fechaVencimiento": "2025-12-23",
     "fechaCreacion": "2025-12-02T01:49:54.453Z",
     "fechaModificacion": "2025-12-02T01:49:54.453Z"
+  },
+  {
+    "id": "987a0528-1526-4d79-959e-5ac4f56bc01d",
+    "nombre": "prueba2",
+    "descripcion": "probando",
+    "estado": "en curso",
+    "dificultad": "media",
+    "fechaVencimiento": "2025-12-06",
+    "fechaCreacion": "2025-12-05T16:22:52.259Z",
+    "fechaModificacion": "2025-12-05T16:22:52.259Z"
+  },
+  {
+    "id": "c90dd440-bb9f-4e0c-9fdb-18cbf9d6ab8f",
+    "nombre": "prueba3",
+    "descripcion": "probrando...",
+    "estado": "pendiente",
+    "dificultad": "difícil",
+    "fechaVencimiento": "2025-12-05",
+    "fechaCreacion": "2025-12-05T16:28:24.075Z",
+    "fechaModificacion": "2025-12-05T16:28:24.075Z"
   }
 ]

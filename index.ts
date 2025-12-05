@@ -199,7 +199,7 @@ function main(): void {
         }
 
         // seleccionar tarea para ver detalles / editar
-        const numSeleccion = parseInt(prompt("Número de tarea para ver acciones (0 volver): "));
+        const numSeleccion = parseInt(prompt("Número de tarea para ver detalles (0 volver): "));
         // caso 1: volver
         if (numSeleccion === 0) {
             break; 
@@ -247,11 +247,30 @@ function main(): void {
       case 3: // crear tarea
       console.clear();
         console.log("\n--- NUEVA TAREA ---");
-        // validaciones
         let nombre = "";
-        while (!nombre || nombre.length > 100) {
-            nombre = prompt("Nombre (Obligatorio, max 100): ");
+
+        // validaciones
+        while (true) {
+            const input = prompt("Nombre (Obligatorio, max 100) Enter para cancelar: ").trim();
+            // si pone enter se sale
+            if (input === "") {
+                console.log("Creación cancelada.");
+                break; // Rompe el bucle (nombre queda vacío)
+            }
+            // si pone algo válido sigue
+            if (input.length <= 100) {
+                nombre = input;
+                break; // Rompe el bucle
+            }
+            // si no es válido muestra error
+            console.log("El nombre no debe exceder 100 caracteres.");
+
         }
+
+        if (!nombre) {
+            break; 
+            }
+        
         const descripcion = prompt("Descripción (Opcional): ");
         const estado = pedirOpcionValida (
             "Estado [P]endiente, [E]n curso, [T]erminada, [C]ancelada (Default P): ", 

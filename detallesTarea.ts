@@ -28,8 +28,8 @@ export const mostrarDetalles = (tarea: Tarea): string => {
   const vencimiento = tarea.fechaVencimiento || "Sin fecha";
   
   // hace que la fecha se vea aaaa-mm-dd hh:mm:ss
-  const fechaCreacionStr = tarea.fechaCreacion.toLocaleString('es-AR');
-  const fechaModifStr = tarea.fechaModificacion.toLocaleString('es-AR');
+  const fechaCreacionStr = tarea.fechaCreacion.toLocaleString('es-AR', { hour12: false });
+  const fechaModifStr = tarea.fechaModificacion.toLocaleString('es-AR', { hour12: false });
   
   // devuelve los detalles completos
   return `
